@@ -6,6 +6,7 @@ import com.winning.base.akso.rpc.rest.annotation.WinPostMapping;
 import com.winning.material.mdm.domain.constant.FeignBaseConst;
 import com.winning.material.mdm.domain.constant.ManufacturerApiPathConst;
 import com.winning.material.mdm.domain.request.ManufacturerInfoListQueryInputDTO;
+import com.winning.material.mdm.domain.response.ManufacturerDetailInfoListQueryOutputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerInfoListQueryOutputDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 
@@ -26,4 +27,12 @@ public interface ManufacturerServiceRpcService {
      */
     @WinPostMapping(path = ManufacturerApiPathConst.QUERY_MANUFACTURER_INFO_LIST)
     WinRpcResponse<WinPagedList<ManufacturerInfoListQueryOutputDTO>> queryManufacturerInfoList(ManufacturerInfoListQueryInputDTO dto);
+
+    /**
+     * 分页查询生产厂家详细信息接口
+     * @param dto
+     * @return WinRpcResponse列表
+     */
+    @WinPostMapping(path = ManufacturerApiPathConst.QUERY_MANUFACTURER_DETAIL_INFO_LIST)
+    WinRpcResponse<WinPagedList<ManufacturerDetailInfoListQueryOutputDTO>> queryManufacturerDetailInfoList(ManufacturerInfoListQueryInputDTO dto);
 }

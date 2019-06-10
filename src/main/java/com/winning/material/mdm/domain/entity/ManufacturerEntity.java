@@ -99,6 +99,9 @@ public class ManufacturerEntity extends BaseEntity{
     @Transient
     private String nameSet;
 
+    @Transient
+    private String district;
+
     @Override
     public Long getId() {
         return this.orgId;

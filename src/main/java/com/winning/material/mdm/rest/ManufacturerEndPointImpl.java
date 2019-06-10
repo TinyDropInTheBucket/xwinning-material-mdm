@@ -7,6 +7,7 @@ import com.winning.material.mdm.api.ManufacturerServiceRpcService;
 import com.winning.material.mdm.domain.constant.ErrorConstants;
 import com.winning.material.mdm.domain.constant.ManufacturerApiPathConst;
 import com.winning.material.mdm.domain.request.ManufacturerInfoListQueryInputDTO;
+import com.winning.material.mdm.domain.response.ManufacturerDetailInfoListQueryOutputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerInfoListQueryOutputDTO;
 import com.winning.material.mdm.service.MdmManufacturerService;
 import com.winning.pts.exception.WinningRuntimeException;
@@ -38,5 +39,10 @@ public class ManufacturerEndPointImpl implements ManufacturerServiceRpcService {
             return new WinRpcResponse<>(new WinningRuntimeException(ErrorConstants.ANY_NOT_FOUND, ErrorConstants.ANY_NOT_FOUND_DESC));
         }
         return new WinRpcResponse(manufacturerInfoList.getData(),manufacturerInfoList.getCount());
+    }
+
+    @Override
+    public WinRpcResponse<WinPagedList<ManufacturerDetailInfoListQueryOutputDTO>> queryManufacturerDetailInfoList(ManufacturerInfoListQueryInputDTO dto) {
+        return null;
     }
 }

@@ -2,12 +2,10 @@ package com.winning.material.mdm.service;
 
 import com.winning.base.akso.common.page.WinPagedList;
 import com.winning.material.mdm.domain.entity.ManufacturerContactEntity;
-import com.winning.material.mdm.domain.entity.ManufacturerContactNameSetEntity;
 import com.winning.material.mdm.domain.entity.ManufacturerEntity;
-import com.winning.material.mdm.domain.entity.OrganizationEntity;
+import com.winning.material.mdm.domain.entity.OrganizationContactNameSetEntity;
 import com.winning.material.mdm.domain.request.ManufacturerInfoListQueryInputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerInfoListQueryOutputDTO;
-import com.winning.material.mdm.service.repository.ManufacturerContactRepository;
 import com.winning.material.mdm.service.repository.ManufacturerRepostiory;
 import com.winning.material.mdm.util.CommonNativeSqlUtil;
 import com.winning.material.mdm.util.ServiceCommonUtil;
@@ -84,6 +82,9 @@ public class MdmManufacturerService {
         if (null != dto.getParentOrgId()) {
             equalMap.put("parentOrgId",dto.getParentOrgId());
         }
+        if (likeMap.size() > 0 || equalMap.size() > 0) {
+            equalMap.put("isDel",0);
+        }
         Specification<ManufacturerEntity> spec = ServiceCommonUtil.buildSpecLikeOr(equalMap, null, likeMap);
         List<ManufacturerEntity> resultPageList = manufacturerRepostiory.findAll(spec, pageable).getContent();
         if(CollectionUtil.isEmpty(resultPageList)) {
@@ -91,12 +92,13 @@ public class MdmManufacturerService {
         }
 
         //按供制造商拼接联系人名单后给输出dto
-        int count =0;
+
         StringBuffer stringBuffer;
         for (ManufacturerEntity entity:resultPageList) {
             stringBuffer=new StringBuffer("");
+            int count =0;
             for (ManufacturerContactEntity contactEntity:entity.getContactList()) {
-                for (ManufacturerContactNameSetEntity nameSetEntity:contactEntity.getContactNameList()) {
+                for (OrganizationContactNameSetEntity nameSetEntity:contactEntity.getContactNameList()) {
                     count++;
                     if (count == 1) {
                         stringBuffer.append(nameSetEntity.getFullName());

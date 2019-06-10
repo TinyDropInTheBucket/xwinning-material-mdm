@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author f_zl
  * @version v1.0
@@ -39,4 +41,17 @@ public class ManufacturerInfoListQueryOutputDTO extends BaseOutputDTO {
      */
     @ApiModelProperty(value = "联系人名单", name = "nameSet")
     private String nameSet;
+
+    /**
+     * 许可证号
+     */
+    @ApiModelProperty(value = "许可证号", name = "licenseNo")
+    private String licenseNo;
+
+    /**
+     * 启用标志
+     */
+    @ApiModelProperty(value = "启用标志", name = "isDel")
+    private Integer isDel;
+
 }

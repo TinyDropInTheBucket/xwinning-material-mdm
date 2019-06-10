@@ -79,18 +79,18 @@ public class ServiceCommonUtil {
      * @return
      */
 	public static <T> Specification<T> buildSpecLikeOr(Map<String,Object> equalMap, Map<String,List<Object>> inMap, Map<String,Object> likeMap){
-        return new Specification<T>() {
+        Specification<T> specification = new Specification<T>() {
             private static final long serialVersionUID = 1L;
             @Override
             public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates=new ArrayList<>();
-                if(equalMap!=null) {
+                if(null != equalMap && equalMap.size() != 0) {
                     for (Entry<String, Object> entry : equalMap.entrySet()) {
                         Predicate predicateIsDel=criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue());
                         predicates.add(predicateIsDel);
                     }
                 }
-                if(inMap!=null) {
+                if(null != inMap && inMap.size() != 0) {
                     for (Entry<String, List<Object>> entry : inMap.entrySet()) {
                         Predicate predicateIsDel=root.get(entry.getKey()).in(entry.getValue());
                         predicates.add(predicateIsDel);
@@ -98,7 +98,7 @@ public class ServiceCommonUtil {
                 }
 
                 //like条件的连接方式为or
-                if(likeMap!=null) {
+                if(null != likeMap && likeMap.size() != 0) {
                     List<Predicate> tempList=new ArrayList<>();
                     for (Entry<String,Object> entry : likeMap.entrySet()) {
                         Predicate predicateIsDel=criteriaBuilder.like(root.get(entry.getKey()).as(String.class),
@@ -112,6 +112,7 @@ public class ServiceCommonUtil {
                 return query.where(predicates.toArray(predicatesArray)).getRestriction();
             }
         };
+        return specification;
     }
 
 }

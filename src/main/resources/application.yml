@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: xwinning-material-mdm
+  jpa:
+    show-sql: true
   datasource:
     druid:
       url: jdbc:mysql://127.0.0.1:3306/winning?characterEncoding=utf-8
