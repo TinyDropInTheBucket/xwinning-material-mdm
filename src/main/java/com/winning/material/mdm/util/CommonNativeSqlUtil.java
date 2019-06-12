@@ -100,7 +100,7 @@ public class CommonNativeSqlUtil {
      * @param <T>
      * @return
      */
-    public static <T> WinPagedList<T>  specPageFindList(CommonRepository<T> dao, Map<String,Object> specMap, Pageable pageable, Boolean isDel){
+    public static <T> WinPagedList<T> specPageFindList(CommonRepository<T> dao, Map<String,Object> specMap, Pageable pageable, Boolean isDel){
         Page<T> page= dao.findAll(initSpecification(specMap,isDel),pageable);
         WinPagedList<T> pagedList = new WinPagedList<>();
         pagedList.setData(page.getContent());
@@ -111,34 +111,14 @@ public class CommonNativeSqlUtil {
     /**
      * 批量按指定单键范围查询
      * @param dao
-     * @param ids
-     * @param idName
+     * @param specMap 规则信息
      * @param isDel 可传空则查询全部
      * @param <T>
      * @return
      */
-    public static <T> List<T>  findAllInList(CommonRepository<T> dao,List<Long> ids,String idName,Boolean isDel)
+    public static <T> List<T>  findAllInList(CommonRepository<T> dao,Map<String,Object> specMap,Boolean isDel)
     {
-        Specification<T> spec=new Specification<T>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates=new ArrayList<>();
-                if(null!=isDel)
-                {
-                    if(isDel)
-                    {
-                        predicates.add(criteriaBuilder.equal(root.get("isDel"), DelFlagEmu.IS_DEL.getValue()));
-                    }
-                    else {
-                        predicates.add(criteriaBuilder.equal(root.get("isDel"), DelFlagEmu.IS_NOT_DEL.getValue()));
-                    }
-                }
-                Predicate predicateIds=root.get(idName).in(ids);
-                predicates.add(predicateIds);
-                return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
-            }
-        };
+        Specification<T> spec=initSpecification(specMap,isDel);
         return dao.findAll(spec);
     }
 
@@ -151,8 +131,12 @@ public class CommonNativeSqlUtil {
      * @param <T>
      * @return
      */
-    public static <T> List<T>  findAllInListStep(CommonRepository<T> dao,List<Long> list,String idName,Boolean isDel,Integer step)
+    public static <T> List<T>  findAllInListStep(CommonRepository<T> dao,List<Long> list,String idName,Map<String,Object> specMap,Boolean isDel,Integer step)
     {
+        if(null==specMap)
+        {
+            specMap=new HashMap<>(16);
+        }
         if(null==step)
         {
             /**不传时默认步长**/
@@ -169,7 +153,8 @@ public class CommonNativeSqlUtil {
             if (endIndex > (size)) {
                 endIndex = (size);
             }
-            List<T> encounterTypeList= CommonNativeSqlUtil.findAllInList(dao,list.subList(startIndex, endIndex),idName,isDel);
+            specMap.put(idName,list.subList(startIndex, endIndex));
+            List<T> encounterTypeList= CommonNativeSqlUtil.findAllInList(dao,specMap,isDel);
             clinicalServiceEncounterTypeList.addAll(encounterTypeList);
         }
         return clinicalServiceEncounterTypeList;
@@ -309,10 +294,6 @@ public class CommonNativeSqlUtil {
         if(pageable!=null) {
             //执行本地sql时con第一页开始
             int page=((pageable.getPageNumber())*pageable.getPageSize());
-            if(0==page)
-            {
-                page=1;
-            }
             query.setFirstResult(page);
             int maxsize=page+pageable.getPageSize();
             if(maxsize>count)
@@ -320,7 +301,9 @@ public class CommonNativeSqlUtil {
 
                 query.setMaxResults((int)(maxsize-((maxsize-count)+page)));
             }
-            query.setMaxResults(pageable.getPageSize());
+            else {
+                query.setMaxResults(pageable.getPageSize());
+            }
         }
         else{
             query.setFirstResult(1);
@@ -412,7 +395,7 @@ public class CommonNativeSqlUtil {
      * @param convertData
      */
     public static void convertBigInteger(List<Map<String,Object>> convertData){
-     if(null!=convertData&&convertData.size()>0)
+     if(convertData.isEmpty())
      {
          for(Map<String,Object> data:convertData)
          {

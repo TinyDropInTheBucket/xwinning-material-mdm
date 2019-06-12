@@ -2,6 +2,7 @@ package com.winning.material.mdm.service;
 
 import com.winning.base.akso.common.page.WinPagedList;
 import com.winning.material.mdm.domain.request.ManufacturerInfoListQueryInputDTO;
+import com.winning.material.mdm.domain.response.ManufacturerDetailInfoListQueryOutputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerInfoListQueryOutputDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +26,23 @@ public class ManufacturerServiceTest {
     @Test
     public void queryManufacturerInfoList(){
         ManufacturerInfoListQueryInputDTO dto = new ManufacturerInfoListQueryInputDTO();
+        //dto.setOrgId(4300000022L);
+        //dto.setOrgStatus(152442L);
+        //dto.setKeyword("yy");
+        dto.setKeyword("sh");
+        WinPagedList<ManufacturerInfoListQueryOutputDTO> resultList = mdmManufacturerService.queryManufacturerInfoList(dto);
+        System.out.println("查询到数据：" + resultList.getCount() + "条");
+        System.out.println("详细数据是：" + resultList.getData());
+    }
+
+    @Test
+    public void queryManufacturerDetailInfoList(){
+        ManufacturerInfoListQueryInputDTO dto = new ManufacturerInfoListQueryInputDTO();
         dto.setOrgId(4300000022L);
         //dto.setOrgStatus(152442L);
         //dto.setKeyword("yy");
         //dto.setKeyword("sh");
-        WinPagedList<ManufacturerInfoListQueryOutputDTO> resultList = mdmManufacturerService.queryManufacturerInfoList(dto);
+        WinPagedList<ManufacturerDetailInfoListQueryOutputDTO> resultList = mdmManufacturerService.queryManufacturerDetailInfoList(dto);
         System.out.println("查询到数据：" + resultList.getCount() + "条");
         System.out.println("详细数据是：" + resultList.getData());
     }

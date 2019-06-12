@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @author f_zl
  * @version v1.0
@@ -17,7 +15,12 @@ import java.util.Date;
 @Data
 @ApiModel(value = "ManufacturerInfoListQueryOutputDTO", description = "分页查询生产厂家信息出参")
 public class ManufacturerInfoListQueryOutputDTO extends BaseOutputDTO {
-    private static final long serialVersionID = 1L;
+    /**
+     * 生产厂家标识
+     */
+    @ApiModelProperty(value = "生产厂家标识", name = "orgId")
+    private Long orgId;
+
     /**
      * 生产厂家编码
      */
@@ -45,13 +48,13 @@ public class ManufacturerInfoListQueryOutputDTO extends BaseOutputDTO {
     /**
      * 许可证号
      */
-    @ApiModelProperty(value = "许可证号", name = "licenseNo")
-    private String licenseNo;
+    @ApiModelProperty(value = "许可证号", name = "certificateNo")
+    private String certificateNo;
 
     /**
      * 启用标志
      */
-    @ApiModelProperty(value = "启用标志", name = "isDel")
-    private Integer isDel;
+    @ApiModelProperty(value = "启用标志", name = "orgStatus")
+    private Integer orgStatus;
 
 }

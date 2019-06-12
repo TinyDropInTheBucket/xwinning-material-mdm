@@ -9,30 +9,29 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * @author f_zl
+ * @author OF
  * @version v1.0
- * @className OrganizationContactAddressEntity
- * @description 组织特定联系人地址实体
- * @date 2019/6/11
+ * @className OrganizationAddressEntity
+ * @description 组织地址实体
+ * @date 2019/6/3 19:22
  */
 @Data
 @Entity()
-@Table(name = "ORGANIZATION_CONTACT_ADDRESS")
-public class OrganizationContactAddressEntity extends BaseEntity {
+@Table(name = "ORGANIZATION_ADDRESS")
+public class OrganizationAddressEntity extends BaseEntity {
 
     /**
-     * 组织特定联系人地址标识
+     * 组织地址标识
      */
     @Id
-    @Column(name = "ORG_PURPOSE_ADDRESS_ID")
-    private Long orgPurposeAddressId;
+    @Column(name = "ORG_ADDRESS_ID")
+    private Long orgAddressId;
 
     /**
-     * 组织特定联系人标识
+     * 组织标识
      */
-    @Column(name = "ORG_CONTACT_ID")
-    private Long orgContactId;
-
+    @Column(name = "ORG_ID")
+    private Long orgId;
 
     /**
      * 地址用途代码
@@ -114,6 +113,6 @@ public class OrganizationContactAddressEntity extends BaseEntity {
 
     @Override
     public Long getId() {
-        return this.orgPurposeAddressId;
+        return this.orgAddressId;
     }
 }

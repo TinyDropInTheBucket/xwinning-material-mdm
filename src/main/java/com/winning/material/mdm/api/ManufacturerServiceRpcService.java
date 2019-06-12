@@ -3,8 +3,9 @@ package com.winning.material.mdm.api;
 import com.winning.base.akso.common.page.WinPagedList;
 import com.winning.base.akso.rpc.WinRpcResponse;
 import com.winning.base.akso.rpc.rest.annotation.WinPostMapping;
-import com.winning.material.mdm.domain.constant.FeignBaseConst;
 import com.winning.material.mdm.domain.constant.ManufacturerApiPathConst;
+import com.winning.material.mdm.domain.request.ManufacturerDetailInfoInputDTO;
+import com.winning.material.mdm.domain.request.ManufacturerDetailInfoModifyInputDTO;
 import com.winning.material.mdm.domain.request.ManufacturerInfoListQueryInputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerDetailInfoListQueryOutputDTO;
 import com.winning.material.mdm.domain.response.ManufacturerInfoListQueryOutputDTO;
@@ -18,7 +19,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @date 2019/6/4
  */
 
-@FeignClient(name = FeignBaseConst.REGISTRY_SERVICE_NAME)
+//@FeignClient(name = FeignBaseConst.REGISTRY_SERVICE_NAME)
 public interface ManufacturerServiceRpcService {
     /**
      * 分页查询生产厂家信息接口
@@ -35,4 +36,21 @@ public interface ManufacturerServiceRpcService {
      */
     @WinPostMapping(path = ManufacturerApiPathConst.QUERY_MANUFACTURER_DETAIL_INFO_LIST)
     WinRpcResponse<WinPagedList<ManufacturerDetailInfoListQueryOutputDTO>> queryManufacturerDetailInfoList(ManufacturerInfoListQueryInputDTO dto);
+
+    /**
+     * 新增生产厂家信息API接口
+     * @param dto
+     * @return WinRpcResponse
+     */
+    @WinPostMapping(path = ManufacturerApiPathConst.ADD_MANUFACTURER_DETAIL_INFO)
+    WinRpcResponse addManufacturerDetailInfo(ManufacturerDetailInfoInputDTO dto);
+
+    /**
+     * 修改生产厂家信息API接口
+     * @param dto
+     * @return WinRpcResponse
+     */
+    @WinPostMapping(path = ManufacturerApiPathConst.MODIFY_MANUFACTURER_DETAIL_INFO)
+    WinRpcResponse modifyManufacturerDetailInfo(ManufacturerDetailInfoModifyInputDTO dto);
+
 }

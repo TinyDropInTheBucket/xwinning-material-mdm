@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.Null;
-
 /**
  * @author f_zl
  * @version v1.0
@@ -14,7 +12,7 @@ import javax.validation.constraints.Null;
  */
 @Data
 @ApiModel(value = "ManufacturerInfoListQueryInputDTO",description = "分页查询生产厂家信息入参")
-public class ManufacturerInfoListQueryInputDTO extends WinRpcQueryRequest{
+public class ManufacturerInfoListQueryInputDTO extends WinRpcQueryRequest {
     private static final long serialVersionID = 1L;
 
     /**
@@ -33,7 +31,7 @@ public class ManufacturerInfoListQueryInputDTO extends WinRpcQueryRequest{
      * 生产厂家编码
      */
     @ApiModelProperty(value = "生产厂家编码", name = "orgNo")
-    private String orgNO;
+    private String orgNo;
 
     /**
      * 生产厂家类型代码
@@ -48,8 +46,8 @@ public class ManufacturerInfoListQueryInputDTO extends WinRpcQueryRequest{
     private Long parentOrgId;
 
     /**
-     * 生产厂家状态
+     * 启用标志
      */
-    @ApiModelProperty(value = "生产厂家状态", name = "orgStatus")
+    @ApiModelProperty(value = "启用标志", name = "orgStatus")
     private Long orgStatus;
 }
